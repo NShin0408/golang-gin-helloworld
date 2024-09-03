@@ -4,15 +4,10 @@ import (
 	"fmt"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"os"
 )
 
 func InitDB() (*gorm.DB, error) {
-	// .env ファイルをロード
-	//err := godotenv.Load(".env")
-	//if err != nil {
-	//	return nil, fmt.Errorf("エラー: %v", err)
-	//}
-
 	// 接続文字列を組み立てる
 	dataSourceName := GetDataSourceName()
 
@@ -40,18 +35,12 @@ func InitDB() (*gorm.DB, error) {
 }
 
 func GetDataSourceName() string {
-	//dbUser := os.Getenv("DB_USER")
-	//dbPassword := os.Getenv("DB_PASSWORD")
-	//dbHost := os.Getenv("DB_HOST")
-	//dbPort := os.Getenv("DB_PORT")
-	//dbName := os.Getenv("DB_NAME")
+	dbUser := os.Getenv("DB_USER")
+	dbPassword := os.Getenv("DB_PASSWORD")
+	dbHost := os.Getenv("DB_HOST")
+	dbPort := os.Getenv("DB_PORT")
+	dbName := os.Getenv("DB_NAME")
 
-	dbUser := "postgre_test_m91l_user"
-	dbPassword := "HTHvdmPnv6PlhAEfMNVXLTuLhpDNaN79"
-	dbHost := "dpg-crbe44bqf0us73dbi1hg-a"
-	dbPort := 5432
-	dbName := "postgre_test_m91l"
-
-	dataSourceName := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", dbHost, dbPort, dbUser, dbPassword, dbName)
+	dataSourceName := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=require", dbHost, dbPort, dbUser, dbPassword, dbName)
 	return dataSourceName
 }
