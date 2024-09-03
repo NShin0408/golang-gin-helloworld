@@ -38,7 +38,7 @@ func GetDataSourceName() string {
 	dbUser := os.Getenv("DB_USER")
 	dbPassword := os.Getenv("DB_PASSWORD")
 	dbHost := os.Getenv("DB_HOST")
-	dbPort := 5432
+	dbPort := "5432"
 	dbName := os.Getenv("DB_NAME")
 
 	dataSourceName := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=require", dbHost, dbPort, dbUser, dbPassword, dbName)
