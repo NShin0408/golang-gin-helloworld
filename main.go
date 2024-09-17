@@ -21,27 +21,36 @@ func main() {
 	// Ginのルーター設定
 	r := gin.Default()
 
-	// ランダムな国名を取得するエンドポイント
-	r.GET("/", func(c *gin.Context) {
-		var countries []models.Country
+	// 静的ファイルの提供
+	r.Static("/static/css", "./static/css")
+	r.Static("/static/images", "./static/images")
 
-		// 国名を全て取得
-		if err := dbConn.Find(&countries).Error; err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve countries"})
+	// テンプレートファイルの読み込み
+	r.LoadHTMLGlob("templates/*")
+
+	r.GET("/", func(c *gin.Context) {
+		var profiles []models.Profile
+
+		if err := dbConn.Find(&profiles).Error; err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve profiles"})
 			return
 		}
 
-		// ランダムな国名を選択
-		if len(countries) == 0 {
-			c.String(http.StatusNotFound, "No countries found")
+		if len(profiles) == 0 {
+			c.String(http.StatusNotFound, "No profiles found")
 			return
 		}
 
 		rand.Seed(time.Now().UnixNano())
-		randomCountry := countries[rand.Intn(len(countries))]
+		randomProfile := profiles[rand.Intn(len(profiles))]
 
-		// 国名をレスポンス
-		c.String(http.StatusOK, randomCountry.Name)
+		imageURL := fmt.Sprintf("/static/images/%s", randomProfile.ImageFilename)
+
+		c.HTML(http.StatusOK, "profile.html", gin.H{
+			"name":   randomProfile.Name,
+			"detail": randomProfile.Detail,
+			"image":  imageURL,
+		})
 	})
 
 	// サーバーを起動

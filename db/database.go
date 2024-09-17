@@ -2,10 +2,23 @@ package db
 
 import (
 	"fmt"
+	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
+	"log"
 	"os"
 )
+
+// init関数はパッケージが初期化されるときに自動的に実行されます
+func init() {
+	// APP_ENVがdevelopmentであれば.envファイルを読み込む
+	if os.Getenv("APP_ENV") == "development" {
+		err := godotenv.Load()
+		if err != nil {
+			log.Fatalf("Error loading .env file: %v", err)
+		}
+	}
+}
 
 func InitDB() (*gorm.DB, error) {
 	// 接続文字列を組み立てる
