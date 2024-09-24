@@ -9,7 +9,6 @@ import (
 	"os"
 )
 
-// init関数はパッケージが初期化されるときに自動的に実行されます
 func init() {
 	// APP_ENVがdevelopmentであれば.envファイルを読み込む
 	if os.Getenv("APP_ENV") == "development" {

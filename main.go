@@ -5,9 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"golang_gin_helloworld/db"
 	"golang_gin_helloworld/models"
-	"math/rand"
 	"net/http"
-	"time"
 )
 
 func main() {
@@ -22,8 +20,7 @@ func main() {
 	r := gin.Default()
 
 	// 静的ファイルの提供
-	r.Static("/static/css", "./static/css")
-	r.Static("/static/images", "./static/images")
+	r.Static("/static", "./static")
 
 	// テンプレートファイルの読み込み
 	r.LoadHTMLGlob("templates/*")
@@ -41,15 +38,8 @@ func main() {
 			return
 		}
 
-		rand.Seed(time.Now().UnixNano())
-		randomProfile := profiles[rand.Intn(len(profiles))]
-
-		imageURL := fmt.Sprintf("/static/images/%s", randomProfile.ImageFilename)
-
-		c.HTML(http.StatusOK, "profile.html", gin.H{
-			"name":   randomProfile.Name,
-			"detail": randomProfile.Detail,
-			"image":  imageURL,
+		c.HTML(http.StatusOK, "profiles.html", gin.H{
+			"profiles": profiles,
 		})
 	})
 
