@@ -22,7 +22,7 @@
             <p>{{ .Detail }}</p>
             <div class="buttons">
                 <a href="{{ .AmazonUrl }}" class="button button-amazon">View on Amazon</a>
-                <a href="#" class="button button-details">View Details</a>
+                <button class="button button-details" onclick="openModal('{{ .ID }}')">View Details</button>
             </div>
         </div>
     </section>
@@ -31,5 +31,58 @@
 <footer>
     <!-- フッターコンテンツ -->
 </footer>
+
+<!-- モーダルウィンドウ -->
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h2>推奨リンク</h2>
+        <ul id="recommendList" class="link-list">
+        </ul>
+    </div>
+</div>
+
+<script>
+    // モーダルを開く
+    function openModal(bookId) {
+        const modal = document.getElementById("myModal");
+        const recommendList = document.getElementById("recommendList");
+
+        // 推奨リンクをAPIなどから取得
+        fetch(`/api/recommend/${bookId}`)
+            .then(response => response.json())
+            .then(data => {
+                recommendList.innerHTML = ""; // リストをクリア
+                if (data.recommendations.length > 0) {
+                    data.recommendations.forEach(recommend => {
+                        const listItem = document.createElement("li");
+                        const link = document.createElement("a");
+                        link.href = recommend.Url;
+                        link.textContent = recommend.Detail;
+                        listItem.appendChild(link);
+                        recommendList.appendChild(listItem);
+                    });
+                } else {
+                    recommendList.innerHTML = "<li>推奨リンクはありません。</li>";
+                }
+            });
+
+        modal.style.display = "block";
+    }
+
+    // モーダルを閉じる
+    function closeModal() {
+        const modal = document.getElementById("myModal");
+        modal.style.display = "none";
+    }
+
+    // モーダル外をクリックしたときに閉じる
+    window.onclick = function(event) {
+        const modal = document.getElementById("myModal");
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
 </body>
 </html>

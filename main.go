@@ -43,6 +43,21 @@ func main() {
 		})
 	})
 
+	// 推奨リンクを取得するハンドラー
+	r.GET("/api/recommend/:id", func(c *gin.Context) {
+		bookID := c.Param("id")
+		var recommendations []models.Recommend
+
+		if err := dbConn.Where("book_id = ?", bookID).Find(&recommendations).Error; err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve recommendations"})
+			return
+		}
+
+		c.JSON(http.StatusOK, gin.H{
+			"recommendations": recommendations,
+		})
+	})
+
 	// サーバーを起動
 	r.Run() // listen and serve on 0.0.0.0:8080
 }
