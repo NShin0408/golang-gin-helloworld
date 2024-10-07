@@ -24,7 +24,7 @@ main {
     width: 100%;
 }
 
-.profile {
+.book {
     background-color: white;
     border-radius: 10px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -37,7 +37,7 @@ main {
     max-width: 800px;
 }
 
-.profile-image {
+.book-image {
     width: 232px;
     height: 348px;
     object-fit: cover;
@@ -45,12 +45,12 @@ main {
     margin-right: 20px; /* Increase the right margin for more space */
 }
 
-.profile-details {
+.book-details {
     text-align: left;
     margin-left: 20px; /* Increase the left margin for more space */
 }
 
-.profile-details h2 {
+.book-details h2 {
     margin-top: 0;
 }
 

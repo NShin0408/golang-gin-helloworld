@@ -1,6 +1,6 @@
 package models
 
-type Profile struct {
+type Book struct {
 	ID            uint   `gorm:"primaryKey"`
 	Name          string `gorm:"size:100;not null"`
 	Detail        string

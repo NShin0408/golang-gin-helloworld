@@ -26,20 +26,20 @@ func main() {
 	r.LoadHTMLGlob("templates/*")
 
 	r.GET("/", func(c *gin.Context) {
-		var profiles []models.Profile
+		var books []models.Book
 
-		if err := dbConn.Find(&profiles).Error; err != nil {
-			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve profiles"})
+		if err := dbConn.Find(&books).Error; err != nil {
+			c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to retrieve books"})
 			return
 		}
 
-		if len(profiles) == 0 {
-			c.String(http.StatusNotFound, "No profiles found")
+		if len(books) == 0 {
+			c.String(http.StatusNotFound, "No books found")
 			return
 		}
 
-		c.HTML(http.StatusOK, "profiles.html", gin.H{
-			"profiles": profiles,
+		c.HTML(http.StatusOK, "books.html", gin.H{
+			"books": books,
 		})
 	})
 

@@ -14,10 +14,10 @@
         取り上げられた頻度を反映しています。</p>
 </header>
 <main>
-    {{ range .profiles }}
-    <section class="profile">
-        <img src="/static/images/{{ .ImageFilename }}" alt="{{ .Name }}の画像" class="profile-image">
-        <div class="profile-details">
+    {{ range .books }}
+    <section class="book">
+        <img src="/static/images/{{ .ImageFilename }}" alt="{{ .Name }}の画像" class="book-image">
+        <div class="book-details">
             <h2>{{ .Name }}</h2>
             <p>{{ .Detail }}</p>
             <div class="buttons">
