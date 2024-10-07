@@ -48,7 +48,7 @@
         const modal = document.getElementById("myModal");
         const recommendList = document.getElementById("recommendList");
 
-        // 推奨リンクをAPIなどから取得
+        // 推奨リンクをAPIから取得する
         fetch(`/api/recommend/${bookId}`)
             .then(response => response.json())
             .then(data => {
@@ -76,7 +76,7 @@
         modal.style.display = "none";
     }
 
-    // モーダル外をクリックしたときに閉じる
+    // モーダルの外をクリックしたときに閉じる
     window.onclick = function(event) {
         const modal = document.getElementById("myModal");
         if (event.target == modal) {
